@@ -16,7 +16,7 @@ class Pila(val tam:Int, var elementos:Array<Char>) {
     }
 
     fun insertar(elemento: Char) {
-        if (elementos.size < tam) {
+        if (cima < tam) {
             cima++
             elementos.plus(elemento)
         } else {
