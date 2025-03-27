@@ -3,7 +3,7 @@ package com.example.graficadorapp
 // el tamano es el valor maximo de elementos que puede alcanzar.
 // la cima es el indice del ultimo elemento.
 class Pila(val tam:Int, var elementos:Array<Char>) {
-    private var cima = elementos.size
+    var cima = elementos.size
 
     fun crearPila(e:Array<Char>) {
         if (e.size < tam) {
@@ -13,12 +13,13 @@ class Pila(val tam:Int, var elementos:Array<Char>) {
             println("La pila solo va a tomar hasta los ultimos $tam elementos")
             elementos = e.takeLast(tam).toTypedArray() // se achica la pila para que no haya desbordamiento
         }
+        cima = elementos.size
     }
 
     fun insertar(elemento: Char) {
         if (cima < tam) {
+            elementos = elementos.plus(elemento)
             cima++
-            elementos.plus(elemento)
         } else {
             println("La pila esta llena.")
         }
@@ -26,9 +27,9 @@ class Pila(val tam:Int, var elementos:Array<Char>) {
 
     fun quitar() {
         if (cima > 0) {
-            cima--
             // quita el primer elemento, convierte a un array en caso de ser convertido a lista.
-            elementos.drop(1).toTypedArray()
+            elementos = elementos.dropLast(1).toTypedArray()
+            cima--
         } else {
             println("La pila esta vacia.")
         }
