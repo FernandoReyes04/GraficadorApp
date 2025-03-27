@@ -1,7 +1,7 @@
 package com.example.graficadorapp
 
-// el tamano es el valor maximo de elementos que puede alcanzar.
-// la cima es el indice del ultimo elemento.
+/* el tamano es el valor maximo de elementos que puede alcanzar.
+la cima es el indice del ultimo elemento. */
 class Pila(val tam:Int, var elementos:Array<Char>) {
     var cima = elementos.size
 
