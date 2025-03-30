@@ -36,14 +36,25 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.testng)
-    testImplementation(libs.junit)
+    implementation("com.google.guava:guava:30.1-android")
+
+    // Configuración para evitar duplicados
+    testImplementation(libs.junit) {
+        exclude(group = "org.hamcrest") // Excluye Hamcrest de JUnit
+    }
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Si encuentras que Guava es necesario, añade esta configuración
+    configurations.all {
+        resolutionStrategy {
+            force("com.google.guava:guava:30.1.1-android")
+            exclude(group = "com.google.guava", module = "listenablefuture")
+        }
+    }
 }
