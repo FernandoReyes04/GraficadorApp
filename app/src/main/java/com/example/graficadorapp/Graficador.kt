@@ -2,6 +2,7 @@ package com.example.graficadorapp
 
 class Graficador {
     private val pila = mutableListOf<Char>()
+    private val pilaEvaluacion = mutableListOf<Double>()
 
     // Función para convertir una expresión infija a postfija
     fun infijaAPostfija(expresion: String): String {
@@ -47,5 +48,49 @@ class Graficador {
         }
 
         return postfija
+    }
+
+    // Nueva función para evaluar un punto en la expresión postfija
+    fun evaluarPunto(expresionPostfija: String, valores: Map<Char, Double>): Double {
+        pilaEvaluacion.clear()
+
+        for (caracter in expresionPostfija) {
+            when {
+                caracter.isDigit() -> {
+                    pilaEvaluacion.add(caracter.toString().toDouble())
+                }
+                caracter.isLetter() -> {
+                    if (!valores.containsKey(caracter)) {
+                        throw IllegalArgumentException("Valor no proporcionado para '$caracter'")
+                    }
+                    pilaEvaluacion.add(valores[caracter]!!)
+                }
+                else -> {
+                    if (pilaEvaluacion.size < 2) {
+                        throw IllegalArgumentException("Expresión postfija inválida")
+                    }
+
+                    val operando2 = pilaEvaluacion.removeAt(pilaEvaluacion.size - 1)
+                    val operando1 = pilaEvaluacion.removeAt(pilaEvaluacion.size - 1)
+
+                    val resultado = when (caracter) {
+                        '+' -> operando1 + operando2
+                        '-' -> operando1 - operando2
+                        '*' -> operando1 * operando2
+                        '/' -> operando1 / operando2
+                        '^' -> Math.pow(operando1, operando2)
+                        else -> throw IllegalArgumentException("Operador no soportado: $caracter")
+                    }
+
+                    pilaEvaluacion.add(resultado)
+                }
+            }
+        }
+
+        if (pilaEvaluacion.size != 1) {
+            throw IllegalArgumentException("Expresión postfija inválida")
+        }
+
+        return pilaEvaluacion[0]
     }
 }
