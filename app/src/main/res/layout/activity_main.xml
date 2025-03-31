@@ -21,7 +21,7 @@
         android:id="@+id/etFuncion"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Ej: a+b*c"
+        android:hint="Ej: 2*x+1 o (a+b)*c"
         app:layout_constraintTop_toBottomOf="@id/tvTitulo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,29 +31,65 @@
         android:id="@+id/etValores"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Valores (ej: a=2,b=3,c=4)"
+        android:hint="Valores variables (ej: a=2,b=3) - Opcional para rango"
         app:layout_constraintTop_toBottomOf="@id/etFuncion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"/>
 
+    <!-- rango -->
+    <EditText
+        android:id="@+id/etXInicial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="X inicial (para rango)"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/etValores"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="20dp"/>
+
+    <EditText
+        android:id="@+id/etXFinal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="X final (para rango)"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/etXInicial"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="20dp"/>
+
+    <EditText
+        android:id="@+id/etPaso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Paso (default 0.1)"
+        android:inputType="numberDecimal"
+        app:layout_constraintTop_toBottomOf="@id/etXFinal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="20dp"/>
+
     <Button
         android:id="@+id/btnGraficar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Graficar"
-        app:layout_constraintTop_toBottomOf="@id/etFuncion"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="70dp"/>
-
-    <TextView
-        android:id="@+id/tvResultado"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/btnGraficar"
+        android:text="Calcular"
+        app:layout_constraintTop_toBottomOf="@id/etPaso"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="20dp"/>
 
+    <TextView
+        android:id="@+id/tvResultado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="100dp"
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@id/btnGraficar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"
+        android:background="@android:drawable/editbox_background"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

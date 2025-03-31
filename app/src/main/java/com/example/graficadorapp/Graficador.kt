@@ -93,4 +93,24 @@ class Graficador {
 
         return pilaEvaluacion[0]
     }
+
+
+    //  Evaluar un rango de puntos
+    fun evaluarRango(
+        expresionPostfija: String,
+        xInicial: Double,
+        xFinal: Double,
+        paso: Double = 0.1
+    ): Array<DoubleArray> {
+        val puntos = mutableListOf<DoubleArray>()
+        var x = xInicial
+
+        while (x <= xFinal) {
+            val y = evaluarPunto(expresionPostfija, mapOf('x' to x))
+            puntos.add(doubleArrayOf(x, y))
+            x += paso
+        }
+
+        return puntos.toTypedArray()
+    }
 }
