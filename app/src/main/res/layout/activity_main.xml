@@ -27,6 +27,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="20dp"/>
 
+    <EditText
+        android:id="@+id/etValores"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Valores (ej: a=2,b=3,c=4)"
+        app:layout_constraintTop_toBottomOf="@id/etFuncion"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="20dp"/>
+
     <Button
         android:id="@+id/btnGraficar"
         android:layout_width="wrap_content"
@@ -35,13 +45,12 @@
         app:layout_constraintTop_toBottomOf="@id/etFuncion"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="70dp"/>
 
     <TextView
         android:id="@+id/tvResultado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Postfija: "
         app:layout_constraintTop_toBottomOf="@id/btnGraficar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
