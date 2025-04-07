@@ -84,6 +84,9 @@ class MainActivity : AppCompatActivity() {
                     puntos.takeLast(3).forEach {
                         resultado.append("x=${it[0]}, y=${it[1]}\n")
                     }
+
+                    val graficaView = findViewById<GraficadorView>(R.id.graficaView)
+                    graficaView.setPuntos(puntos)
                 }
 
                 tvResultado.text = resultado.toString()
