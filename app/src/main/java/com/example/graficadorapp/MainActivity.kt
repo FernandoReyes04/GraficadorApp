@@ -18,31 +18,27 @@ class MainActivity : AppCompatActivity() {
         val etXFinal = findViewById<EditText>(R.id.etXFinal)
         val etPaso = findViewById<EditText>(R.id.etPaso)
         val btnGraficar = findViewById<Button>(R.id.btnGraficar)
+        val btnEjemplo = findViewById<Button>(R.id.btnEjemplo)
         val btnLimpiar = findViewById<Button>(R.id.btnLimpiar)
         val tvResultado = findViewById<TextView>(R.id.tvResultado)
         val graficaView = findViewById<GraficadorView>(R.id.graficaView)
 
         val graficador = Graficador()
 
-        // Función original para parsear valores (sin cambios)
         fun parsearValores(valoresStr: String): Map<Char, Double> {
-            if (valoresStr.isEmpty()) return emptyMap()
-
             val valores = mutableMapOf<Char, Double>()
-            val pares = valoresStr.split(',')
-
-            for (par in pares) {
-                try {
+            if (valoresStr.isEmpty()) return valores
+            try {
+                val pares = valoresStr.split(',')
+                for (par in pares) {
                     val partes = par.split('=')
-                    if (partes.size != 2) continue
-
-                    val variable = partes[0].trim()[0]
-                    val valor = partes[1].trim().toDouble()
-                    valores[variable] = valor
-                } catch (e: Exception) {
-                    continue
+                    if (partes.size == 2) {
+                        val variable = partes[0].trim()[0]
+                        val valor = partes[1].trim().toDouble()
+                        valores[variable] = valor
+                    }
                 }
-            }
+            } catch (e: Exception) {}
             return valores
         }
 
@@ -56,54 +52,61 @@ class MainActivity : AppCompatActivity() {
             graficaView.setPuntos(arrayOf())
         }
 
+        btnEjemplo.setOnClickListener {
+            etFuncion.setText("a * x^2 + b")
+            etValores.setText("a=1, b=-4")
+            etXInicial.setText("-5")
+            etXFinal.setText("5")
+            etPaso.setText("0.5")
+            btnGraficar.performClick()
+            Toast.makeText(this, "Ejemplo cargado correctamente", Toast.LENGTH_SHORT).show()
+        }
+
         btnGraficar.setOnClickListener {
             try {
                 val expresion = etFuncion.text.toString().trim()
                 if (expresion.isEmpty()) {
-                    Toast.makeText(this, "Ingrese una función", Toast.LENGTH_SHORT).show()
+                    etFuncion.error = "Campo obligatorio"
+                    return@setOnClickListener
+                }
+
+                val xIni = etXInicial.text.toString().toDoubleOrNull()
+                val xFin = etXFinal.text.toString().toDoubleOrNull()
+                
+                if (xIni == null || xFin == null) {
+                    Toast.makeText(this, "Falta rango X", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
 
                 val postfija = graficador.infijaAPostfija(expresion)
-                val valores = parsearValores(etValores.text.toString().trim())
-                val resultado = StringBuilder()
+                val valoresExtra = parsearValores(etValores.text.toString().trim())
+                val paso = etPaso.text.toString().toDoubleOrNull() ?: 0.1
+                
+                // IMPORTANTE: Ahora pasamos los valores extra (a, b, etc.) al evaluar el rango
+                val puntos = graficador.evaluarRango(postfija, xIni, xFin, paso, valoresExtra)
 
-                // Evaluación de punto único (si hay valores)
-                if (valores.isNotEmpty()) {
-                    val y = graficador.evaluarPunto(postfija, valores)
-                    resultado.append("Evaluación puntual:\n")
-                    valores.forEach { (k, v) -> resultado.append("$k = $v\n") }
-                    resultado.append("Resultado: y = $y\n\n")
-                }
-
-                // Evaluación por rango (si hay valores de rango)
-                val xInicial = etXInicial.text.toString().toDoubleOrNull()
-                val xFinal = etXFinal.text.toString().toDoubleOrNull()
-
-                if (xInicial != null && xFinal != null) {
-                    val paso = etPaso.text.toString().toDoubleOrNull() ?: 0.1
-                    val puntos = graficador.evaluarRango(postfija, xInicial, xFinal, paso)
-
-                    resultado.append("Evaluación por rango:\n")
-                    resultado.append("De x=$xInicial a x=$xFinal (paso=$paso)\n")
-                    resultado.append("Total puntos: ${puntos.size}\n\n")
-
-                    // Mostrar primeros y últimos 3 puntos
-                    puntos.take(3).forEach {
-                        resultado.append("x=${it[0]}, y=${it[1]}\n")
-                    }
-                    if (puntos.size > 6) resultado.append("...\n")
-                    puntos.takeLast(3).forEach {
-                        resultado.append("x=${it[0]}, y=${it[1]}\n")
-                    }
-
+                if (puntos.isEmpty()) {
+                    tvResultado.text = "⚠️ No se generaron puntos.\nVerifica si la función usa variables que no definiste."
+                    graficaView.setPuntos(arrayOf())
+                } else {
                     graficaView.setPuntos(puntos)
+                    
+                    val info = StringBuilder()
+                    info.append("GRAFICADA: $expresion\n")
+                    info.append("Puntos generados: ${puntos.size}\n")
+                    info.append("---------------------------------\n")
+                    info.append("LISTADO DE PUNTOS (x, y):\n")
+                    
+                    // Mostrar la lista completa de puntos como pediste
+                    for (p in puntos) {
+                        info.append("x: ${String.format("%.2f", p[0])} | y: ${String.format("%.2f", p[1])}\n")
+                    }
+                    
+                    tvResultado.text = info.toString()
                 }
-
-                tvResultado.text = resultado.toString()
 
             } catch (e: Exception) {
-                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                tvResultado.text = "❌ Error:\n${e.message}"
             }
         }
     }
