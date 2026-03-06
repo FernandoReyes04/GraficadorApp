@@ -1,4 +1,4 @@
-package com.example.graficadorapp
+package com.example.graficadoraapp
 
 import android.os.Bundle
 import android.widget.Button
@@ -18,7 +18,9 @@ class MainActivity : AppCompatActivity() {
         val etXFinal = findViewById<EditText>(R.id.etXFinal)
         val etPaso = findViewById<EditText>(R.id.etPaso)
         val btnGraficar = findViewById<Button>(R.id.btnGraficar)
+        val btnLimpiar = findViewById<Button>(R.id.btnLimpiar)
         val tvResultado = findViewById<TextView>(R.id.tvResultado)
+        val graficaView = findViewById<GraficadorView>(R.id.graficaView)
 
         val graficador = Graficador()
 
@@ -42,6 +44,16 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             return valores
+        }
+
+        btnLimpiar.setOnClickListener {
+            etFuncion.text.clear()
+            etValores.text.clear()
+            etXInicial.text.clear()
+            etXFinal.text.clear()
+            etPaso.text.clear()
+            tvResultado.text = ""
+            graficaView.setPuntos(arrayOf())
         }
 
         btnGraficar.setOnClickListener {
@@ -85,7 +97,6 @@ class MainActivity : AppCompatActivity() {
                         resultado.append("x=${it[0]}, y=${it[1]}\n")
                     }
 
-                    val graficaView = findViewById<GraficadorView>(R.id.graficaView)
                     graficaView.setPuntos(puntos)
                 }
 

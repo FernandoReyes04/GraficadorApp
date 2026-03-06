@@ -1,4 +1,4 @@
-package com.example.graficadorapp
+package com.example.graficadoraapp
 
 class Graficador {
     private val pila = mutableListOf<Char>()
@@ -28,7 +28,9 @@ class Graficador {
                     while (pila.isNotEmpty() && pila.last() != '(') {
                         postfija += pila.removeAt(pila.size - 1)
                     }
-                    pila.removeAt(pila.size - 1)
+                    if (pila.isNotEmpty()) {
+                        pila.removeAt(pila.size - 1)
+                    }
                 }
 
                 // Si es un operador

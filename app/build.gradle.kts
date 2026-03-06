@@ -1,18 +1,19 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.example.graficadorapp"
+    namespace = "com.example.graficadoraapp"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.graficadorapp"
+        applicationId = "com.example.graficadoraapp"
         minSdk = 25
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 3
+        versionName = "1.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -42,15 +43,15 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation("com.google.guava:guava:30.1-android")
+    implementation(platform("com.google.firebase:firebase-bom:34.9.0"))
+    implementation("com.google.firebase:firebase-analytics")
 
-    // Configuración para evitar duplicados
     testImplementation(libs.junit) {
-        exclude(group = "org.hamcrest") // Excluye Hamcrest de JUnit
+        exclude(group = "org.hamcrest")
     }
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Si encuentras que Guava es necesario, añade esta configuración
     configurations.all {
         resolutionStrategy {
             force("com.google.guava:guava:30.1.1-android")
