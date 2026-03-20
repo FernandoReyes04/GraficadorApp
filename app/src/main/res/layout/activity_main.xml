@@ -1,105 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#FDFDFD"
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvTitulo"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingrese la función:"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp"
+        tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/etFuncion"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Ej: 2*x+1 o (a+b)*c"
-        app:layout_constraintTop_toBottomOf="@id/tvTitulo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"/>
+        <TextView
+            android:id="@+id/tvTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App Graficadora"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#2C3E50"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/etValores"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Valores variables (ej: a=2,b=3) - Opcional para rango"
-        app:layout_constraintTop_toBottomOf="@id/etFuncion"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"/>
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardInputs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#EEEEEE"
+            app:strokeWidth="1dp"
+            app:layout_constraintTop_toBottomOf="@id/tvTitulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <!-- rango -->
-    <EditText
-        android:id="@+id/etXInicial"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="X inicial (para rango)"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/etValores"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="#FFFFFF">
 
-    <EditText
-        android:id="@+id/etXFinal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="X final (para rango)"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/etXInicial"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="20dp"/>
+                <EditText
+                    android:id="@+id/etFuncion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Escribe la función (ej: x^2 + 2)"
+                    android:textColor="#212121"
+                    android:textColorHint="#BDBDBD"
+                    android:inputType="textVisiblePassword"
+                    android:background="@android:drawable/edit_text"
+                    android:padding="12dp" />
 
-    <EditText
-        android:id="@+id/etPaso"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Paso (default 0.1)"
-        android:inputType="numberDecimal"
-        app:layout_constraintTop_toBottomOf="@id/etXFinal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginHorizontal="20dp"/>
+                <EditText
+                    android:id="@+id/etValores"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:hint="Variables opcionales (a=5, b=2)"
+                    android:textColor="#212121"
+                    android:textColorHint="#BDBDBD"
+                    android:background="@android:drawable/edit_text"
+                    android:padding="12dp" />
 
-    <Button
-        android:id="@+id/btnGraficar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Graficar"
-        app:layout_constraintTop_toBottomOf="@id/etPaso"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Configurar Rango"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="16dp"
+                    android:textColor="#7F8C8D"/>
 
-    <TextView
-        android:id="@+id/tvResultado"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:minHeight="100dp"
-        android:scrollbars="vertical"
-        app:layout_constraintTop_toBottomOf="@id/btnGraficar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"
-        android:background="@android:drawable/editbox_background"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:orientation="horizontal">
 
-    <com.example.graficadorapp.GraficadorView
-        android:id="@+id/graficaView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@id/tvResultado"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="20dp"/>
+                    <EditText
+                        android:id="@+id/etXInicial"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="X Ini"
+                        android:textColor="#212121"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:background="@android:drawable/edit_text"
+                        android:padding="10dp"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <EditText
+                        android:id="@+id/etXFinal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginHorizontal="6dp"
+                        android:hint="X Fin"
+                        android:textColor="#212121"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:background="@android:drawable/edit_text"
+                        android:padding="10dp"/>
+
+                    <EditText
+                        android:id="@+id/etPaso"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:hint="Paso"
+                        android:textColor="#212121"
+                        android:inputType="numberDecimal"
+                        android:background="@android:drawable/edit_text"
+                        android:padding="10dp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:id="@+id/layoutBotones"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/cardInputs"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <Button
+                android:id="@+id/btnGraficar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1.2"
+                android:text="Graficar"
+                android:textSize="16sp"
+                android:backgroundTint="#3498DB"
+                android:layout_marginEnd="4dp"/>
+
+            <Button
+                android:id="@+id/btnEjemplo"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:text="Ejemplo"
+                android:backgroundTint="#2ECC71"
+                android:layout_marginHorizontal="4dp"/>
+
+            <Button
+                android:id="@+id/btnLimpiar"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="0.8"
+                android:text="Borrar"
+                android:backgroundTint="#95A5A6"
+                android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvResultado"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/border_graficadora"
+            android:minHeight="80dp"
+            android:padding="14dp"
+            android:textColor="#2C3E50"
+            android:textSize="13sp"
+            android:lineSpacingExtra="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutBotones" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/border_graficadora"
+            android:elevation="1dp"
+            android:padding="2dp"
+            app:layout_constraintTop_toBottomOf="@id/tvResultado"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.example.graficadoraapp.GraficadorView
+                android:id="@+id/graficaView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

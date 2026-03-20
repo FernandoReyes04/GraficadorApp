@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "499971928983",
+    "project_id": "graficadoraapp",
+    "storage_bucket": "graficadoraapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:499971928983:android:99648c7e041447aa964ad2",
+        "android_client_info": {
+          "package_name": "com.example.graficadoraapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHlw4jx0ixnZEpMqGOAmgw3_AjfhIX_2w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
